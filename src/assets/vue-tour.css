@@ -1,0 +1,70 @@
+.v-step {
+  background-color: #f9f9f9 !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  max-width: 400px !important;
+  padding: 20px !important;
+}
+
+.v-step__header {
+  border-bottom: 1px solid #666666;
+  background-color: #fff !important;
+  font-size: 18px !important;
+  font-weight: bold;
+  color: rgba(17, 24, 39, 0.8) !important;
+  margin-bottom: 10px !important;
+}
+
+.v-step__content {
+  font-size: 16px !important;
+  color: #666666 !important;
+  margin-bottom: 18px !important;
+}
+.v-step__buttons {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.v-step__button {
+  background-color: rgb(37 99 235) !important;
+  border: none !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  font-size: 15px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  margin-left: 10px !important;
+}
+
+.v-step__button:hover {
+  background-color: rgb(29 78 216) !important;
+}
+
+.v-step__button-skip {
+  background-color: rgb(225 239 254) !important;
+  color: rgb(30 66 159) !important;
+}
+
+.v-step__button-skip:hover {
+  background-color: rgb(213, 232, 252) !important;
+}
+
+.v-step__button-previous {
+  background-color: lightgray !important;
+  color: #333 !important;
+}
+
+.v-step__button-previous:hover {
+  background-color: rgb(197, 197, 197) !important;
+}
+
+
+
+.v-step__arrow::before {
+  background-color: #fff !important;
+}
