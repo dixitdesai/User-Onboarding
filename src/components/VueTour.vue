@@ -1,5 +1,5 @@
 <template>
-  <v-tour name="myTour" :steps="steps"></v-tour>
+  <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks"></v-tour>
 </template>
 
 <script>
@@ -44,10 +44,35 @@ export default {
           },
         },
       ],
+      myCallbacks: {
+        onPreviousStep: this.previousStepCallback,
+        onNextStep: this.nextStepCallback,
+        onFinish: this.finishTour,
+        onSkip: this.skipTour,
+        onStop: this.stopTour
+      },
     };
   },
   mounted() {
     this.$tours["myTour"].start();
   },
+  methods: {
+    previousStepCallback (currentStep) {
+      console.log(`User went back from step: ${currentStep}`);
+    },
+    nextStepCallback (currentStep) {
+      console.log(`User went to step: ${currentStep+1}`);
+    },
+    finishTour () {
+      console.log('Tour Completed')
+      localStorage.setItem('showTour', false)
+    },
+    skipTour() {
+      console.log('User skipped the tour!')
+    },
+    stopTour () {
+      console.log('User stopped the tour!')
+    }
+   }
 };
 </script>
