@@ -6,6 +6,9 @@ import {
   useVOnboarding,
 } from "v-onboarding";
 import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useTourStore } from "@/store.js";
+const { showTour } = storeToRefs(useTourStore());
 
 const steps = [
   {
@@ -41,8 +44,18 @@ const steps = [
         text: "Notice... It is the final step in the onboarding process!!",
       },
     },
+    on: {
+      afterStep: () => {
+        finishOnboarding();
+      },
+    },
   },
 ];
+
+const finishOnboarding = () => {
+  showTour.value = false;
+  localStorage.setItem("showTour", false);
+};
 
 const wrapper = ref(null);
 const { start, goToStep, finish } = useVOnboarding(wrapper);
@@ -62,16 +75,16 @@ onMounted(() => {
               <div v-if="step.content">
                 <div class="flex justify-between gap-5">
                   <h3
-                  v-if="step.content.title"
-                  class="text-lg font-medium leading-6 text-gray-900"
-                >
-                  {{ step.content.title }}
-                </h3>
-                <span
-                  class="bottom-full text-end pt-1 mr-2 text-gray-600 font-medium text-xs"
-                >
-                  {{ `${index + 1}/${steps.length}` }}
-                </span>
+                    v-if="step.content.title"
+                    class="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    {{ step.content.title }}
+                  </h3>
+                  <span
+                    class="bottom-full text-end pt-1 mr-2 text-gray-600 font-medium text-xs"
+                  >
+                    {{ `${index + 1}/${steps.length}` }}
+                  </span>
                 </div>
 
                 <div
