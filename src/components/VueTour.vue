@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { mapWritableState, mapState } from "pinia";
+import { mapWritableState } from "pinia";
 import { useTourStore } from "@/store.js";
 
 export default {
@@ -23,6 +23,20 @@ export default {
             title: "Image Demonstration",
           },
           content: `<img src='https://cdn.dribbble.com/users/603800/screenshots/4569474/dribbble-code.gif' alt='Code gif'"/>`,
+        },
+        {
+          target: "#libraries",
+          header: {
+            title: "Alter Library",
+          },
+          content: "Select your desired onboarding method..",
+        },
+        {
+          target: "#startTour",
+          header: {
+            title: "Initiate Tour!",
+          },
+          content: "Don't worry you can start tour again, if you miss anything",
         },
         {
           target: "#skip",

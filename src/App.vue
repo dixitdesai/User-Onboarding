@@ -22,8 +22,10 @@ onMounted(() => {
   if (!localStorage.getItem("showTour") && !localStorage.getItem("username")) {
     console.log("User visiting the site for the first time!!");
     const name = prompt("What is your name?");
-    localStorage.setItem("username", name);
-    showTour.value = true;
+    if (name) {
+      localStorage.setItem("username", name);
+      showTour.value = true;
+    }
   }
 });
 </script>
