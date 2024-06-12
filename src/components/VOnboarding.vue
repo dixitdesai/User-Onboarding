@@ -6,11 +6,20 @@ import {
   useVOnboarding,
 } from "v-onboarding";
 import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useTourStore } from "@/store.js";
+const { showTour } = storeToRefs(useTourStore());
 
 const steps = [
   {
     attachTo: { element: "#foo" },
-    content: { title: `Welcome ${localStorage.getItem("username")}!!` },
+    content: {
+      title: `Welcome ${localStorage.getItem("username")}!!`,
+      description: {
+        type: "text",
+        text: "Here is your profile...",
+      }
+    },
   },
   {
     attachTo: { element: "#bar" },
@@ -19,6 +28,26 @@ const steps = [
       description: {
         type: "image",
         text: "https://cdn.dribbble.com/users/603800/screenshots/4569474/dribbble-code.gif",
+      },
+    },
+  },
+  {
+    attachTo: { element: "#libraries" },
+    content: {
+      title: "Alter Library",
+      description: {
+        type: "text",
+        text: "Select your desired onboarding method..",
+      },
+    },
+  },
+  {
+    attachTo: { element: "#startTour" },
+    content: {
+      title: "Initiate Tour!",
+      description: {
+        type: "text",
+        text: "Don't worry you can start tour again, if you miss anything",
       },
     },
   },
@@ -41,8 +70,28 @@ const steps = [
         text: "Notice... It is the final step in the onboarding process!!",
       },
     },
+    on: {
+      beforeStep: (options) => {
+        console.log(
+          "The logic written here will run before displaying the step",
+          options
+        );
+      },
+      afterStep: (options) => {
+        console.log(
+          "The logic written here will run before hiding the step",
+          options
+        );
+      },
+    },
   },
 ];
+
+const finishOnboarding = () => {
+  showTour.value = false;
+  localStorage.setItem("showTour", false);
+  document.body.style.pointerEvents = "auto";
+};
 
 const wrapper = ref(null);
 const { start, goToStep, finish } = useVOnboarding(wrapper);
@@ -62,16 +111,16 @@ onMounted(() => {
               <div v-if="step.content">
                 <div class="flex justify-between gap-5">
                   <h3
-                  v-if="step.content.title"
-                  class="text-lg font-medium leading-6 text-gray-900"
-                >
-                  {{ step.content.title }}
-                </h3>
-                <span
-                  class="bottom-full text-end pt-1 mr-2 text-gray-600 font-medium text-xs"
-                >
-                  {{ `${index + 1}/${steps.length}` }}
-                </span>
+                    v-if="step.content.title"
+                    class="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    {{ step.content.title }}
+                  </h3>
+                  <span
+                    class="bottom-full text-end pt-1 mr-2 text-gray-600 font-medium text-xs"
+                  >
+                    {{ `${index + 1}/${steps.length}` }}
+                  </span>
                 </div>
 
                 <div
@@ -89,9 +138,9 @@ onMounted(() => {
               <div
                 class="mt-5 space-x-4 sm:mt-0 sm:ml-6 sm:flex sm:flex-shrink-0 sm:items-center sm:justify-end relative"
               >
-                <template v-if="index == 2">
+                <template v-if="index == 4">
                   <button
-                    @click="finish"
+                    @click="finishOnboarding"
                     type="button"
                     class="inline-flex items-center justify-center rounded-md border border-transparent bg-slate-100 px-4 py-2 font-medium text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 sm:text-sm"
                   >
@@ -108,11 +157,20 @@ onMounted(() => {
                   </button>
                 </template>
                 <button
+                  v-if="!isLast"
                   @click="next"
                   type="button"
                   class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
                 >
-                  {{ isLast ? "Finish" : "Next" }}
+                  Next
+                </button>
+                <button
+                  v-else
+                  @click="finishOnboarding"
+                  type="button"
+                  class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                >
+                  Finish
                 </button>
               </div>
             </div>

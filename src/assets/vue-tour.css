@@ -63,8 +63,10 @@
   background-color: rgb(197, 197, 197) !important;
 }
 
-
+.v-step__arrow {
+  background-color: lightgray !important;
+}
 
 .v-step__arrow::before {
-  background-color: #fff !important;
+  background-color: lightgray !important;
 }
